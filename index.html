@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Wanpanman - Reader</title>
+        <style>
+            body {
+                background: #000;
+                text-align: center;
+            }
+            img {
+                max-width: 99vw;
+            }
+        </style>
+    </head>
+
+    <body>
+        <select id="chapterSelector" placeholder="Chapter Selector"></select>
+        <div id="pages"></div>
+
+        <script type="text/javascript">
+            const url = '{{url}}';
+            const chapters = {{chapters}};
+            const pages = {{pages}};
+            let selectedIndex = 0;
+
+            if (chapters.length) {
+                const chapSel = document.getElementById('chapterSelector');
+                chapters.forEach((chap, index) => {
+                    const option = document.createElement('option');
+                    option.innerHTML = chap.name;
+                    option.value = chap.link;
+                    if (url === chap.link) {
+                        selectedIndex = index;
+                        option.selected = true;
+                    }
+                    chapSel.appendChild(option);
+                });
+
+                chapSel.addEventListener('change', e => {
+                    goto(e.target.value);
+                });
+            }
+
+            if (pages.length) {
+                const pageDiv = document.getElementById('pages');
+                pages.forEach(page => {
+                    const img = document.createElement('img');
+                    img.src = page;
+                    pageDiv.appendChild(img);
+                });
+            }
+
+            if (pages.length) {
+                const left = 37;
+                const right = 39;
+                document.body.addEventListener('keyup', ({ keyCode }) => {
+                    if (keyCode === right) {
+                        const next = chapters[selectedIndex - 1];
+                        if (next) {
+                            goto(next.link);
+                        }
+                    } else if (keyCode === left) {
+                        const prev = chapters[selectedIndex + 1];
+                        if (prev) {
+                            goto(prev.link);
+                        }
+                    }
+                });
+            }
+
+            function goto(url) {
+                window.location.href = '/?url=' + url;
+            }
+        </script>
+    </body>
+</html>

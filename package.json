@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "command-line-args": "^5.1.1",
+    "compression": "^1.7.4",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "x-ray": "^2.3.3"
+  }
+}
